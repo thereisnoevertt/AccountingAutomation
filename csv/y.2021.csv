@@ -1,0 +1,7 @@
+month,amount,is_expense
+01,100000,false
+01,30000,true
+02,321690,false
+02,130000,true
+03,999999,false
+03,999999,true
