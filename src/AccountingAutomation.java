@@ -60,8 +60,9 @@ public class AccountingAutomation
                         monthsReports = readMonthlyReport(Objects.requireNonNull(readFileContentsOrNull(path)));
                         months.put(i, monthsReports);
                     }
-                    ArrayList<YearlyReport> yearlyReport = readYearlyReport(Objects.requireNonNull(readFileContentsOrNull("C:\\!study\\!proga\\AccountingAutomation\\csv\\y.2021.csv")));
-                    verifyReports(months, yearlyReport);
+                    String path = "C:\\!study\\!proga\\AccountingAutomation\\csv\\y.2021.csv";
+                    ArrayList<YearlyReport> yearlyReport = readYearlyReport(Objects.requireNonNull(readFileContentsOrNull(path)));
+                    verifyReports(months, yearlyReport, path);
                 }
                 case "4" ->
                 {
@@ -188,11 +189,12 @@ public class AccountingAutomation
             System.out.println("Нет данных о прибыли.");
         }
     }
-    private static void verifyReports(Map<Integer, ArrayList<MonthlyReport>> monthlyReports, ArrayList<YearlyReport> yearlyReports)
+    private static void verifyReports(Map<Integer, ArrayList<MonthlyReport>> monthlyReports, ArrayList<YearlyReport> yearlyReports, String path)
     {
+        String yearNumber = path.substring(44,48);
         Map<Integer, Integer> monthlyIncome = new HashMap<>();
         Map<Integer, Integer> monthlyExpense = new HashMap<>();
-
+        System.out.println("Рассматриваемый год: " + yearNumber);
         for (Map.Entry<Integer, ArrayList<MonthlyReport>> entry : monthlyReports.entrySet())
         {
             int month = entry.getKey();
@@ -219,7 +221,6 @@ public class AccountingAutomation
             int month = yearlyReport.getMonth();
             int amount = yearlyReport.getAmount();
             boolean isExpense = yearlyReport.isIs_expense();
-
             if (isExpense)
             {
                 if (!monthlyExpense.containsKey(month) || monthlyExpense.get(month) != amount)
